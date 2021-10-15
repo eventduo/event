@@ -1,7 +1,9 @@
 body {
   background-image: url(./2duo/téléchargement.png);
   background-size: cover;
+  width: 1400px;
 }
+
 * {
   margin: 0;
   padding: 0;
@@ -12,6 +14,9 @@ body {
 header {
   height: 90px;
   background: #2f3640;
+  position: sticky;
+  position: -webkit-sticky;
+  top: 0;
 }
 
 .inner-width {
@@ -79,7 +84,6 @@ header {
 }
 
 .menu-toggle-btn {
-  float: right;
   height: 90px;
   line-height: 90px !important;
   color: #fff;
@@ -90,4 +94,12 @@ header {
 #demo {
   height: 400px;
   width: 100%;
+}
+
+.container {
+  width: 300px;
+  height: 300px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em;
 }
