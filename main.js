@@ -27,7 +27,7 @@ function Item(ref, type, img, price) {
   tickets.img = img;
   return tickets;
 }
-
+//// transforme obj to html element //
 function prepare(ticket) {
   return (
     "<div class='item'><div class='ref'> ref : " +
@@ -38,50 +38,50 @@ function prepare(ticket) {
     ticket.img +
     '"</div> <div class="price">' +
     ticket.price +
-    "</div></div>"
+    "</div><button class='buy'> buy</button></div>"
   );
 }
 
 var ticket1 = Item(
   "r001",
-  "music",
+  "Music ticket",
   "./2duo/william-white-TZCppMjaOHU-unsplash.jpg",
-  "60$"
+  22
 );
 var ticket2 = Item(
   "r002",
-  "music",
+  "Match ticket",
   "./2duo/piero-huerto-gago-2rjjnfdlwGY-unsplash.jpg",
-  "60$"
+  10
 );
-var ticket3 = Item("r003", "music", "./2duo/tiket.jfif", "60$");
+var ticket3 = Item("r003", "Match ticket", "./2duo/tiket.jfif", 15);
 var ticket4 = Item(
   "r004",
-  "music",
+  "Music ticket",
   "./2duo/Couverture-Nordo-16-Nov2-01.jpg",
-  "60$"
+  50
 );
 var ticket5 = Item(
   "r005",
-  "OneManShow",
+  "OneManShow ticket",
   "./2duo/Couverture-Wajiha-22-Oct.eps-01-1024x577.jpg",
-  "60$"
+  40
 );
 var ticket6 = Item(
   "r006",
-  "music",
+  "Music ticket",
   "./2duo/received_1076437333102496.jpg",
-  "60$"
+  35
 );
-var ticket7 = Item("r007", "music", "./2duo/match1.jpg", "12$");
-var ticket8 = Item("r008", "oneManShow", "./2duo/lotfi bouchnak.jfif", "40$");
-var ticket9 = Item("r009", "music", "./2duo/lofti abdelli_0.JPEG", "25$");
-var ticket10 = Item(
-  "r011",
-  "music",
-  "./2duo/243706567_629254011566720_81134159015429546_n.jpg",
-  "60$"
+var ticket7 = Item("r007", "Match ticket", "./2duo/match1.jpg", 12);
+var ticket8 = Item("r008", "Music ticket", "./2duo/lotfi bouchnak.jfif", 40);
+var ticket9 = Item(
+  "r009",
+  "OneManShow ticket",
+  "./2duo/lofti abdelli_0.JPEG",
+  25
 );
+
 tickets.push(ticket1);
 tickets.push(ticket2);
 tickets.push(ticket3);
@@ -91,8 +91,112 @@ tickets.push(ticket6);
 tickets.push(ticket7);
 tickets.push(ticket8);
 tickets.push(ticket9);
-tickets.push(ticket10);
+
 console.log(tickets);
-for (var i = 0; i < tickets.length; i++) {
-  $(".container").append(prepare(tickets[i]));
+
+// for (var i = 0; i < tickets.length; i++) {
+//   $(".container").append(prepare(tickets[i]));
+// }
+function each(coll, f) {
+  if (Array.isArray(coll)) {
+    for (var i = 0; i < coll.length; i++) {
+      f(coll[i], i);
+    }
+  } else {
+    for (var key in coll) {
+      f(coll[key], key);
+    }
+  }
 }
+
+function filter(array, predicate) {
+  var acc = [];
+  each(array, function (element, i) {
+    if (predicate(element, i)) {
+      acc.push(element);
+    }
+  });
+  return acc;
+}
+
+var music = function (tickets) {
+  return filter(tickets, function (elem) {
+    return elem.type === "Music ticket";
+  });
+};
+
+var OneManShow = function (tickets) {
+  return filter(tickets, function (elem) {
+    return elem.type === "OneManShow ticket";
+  });
+};
+
+var match = function (tickets) {
+  return filter(tickets, function (elem, i) {
+    return elem.type === "Match ticket";
+  });
+};
+
+$("#event").click(function () {
+  $(".demo").hide();
+  $(".carousel-control-next-icon").hide();
+  $(".carousel slide").hide();
+  $(".carousel-control-prev").hide();
+  $(".carousel-item").hide();
+  $(".carousel-indicators").hide();
+  $(".container").empty();
+  for (var i = 0; i < tickets.length; i++) {
+    $(".container").append(prepare(tickets[i]));
+  }
+  $(".buy").click(function () {
+    counter++;
+    var priceinstring = $(this).prev().text();
+    totalprice = totalprice + Number(priceinstring);
+    console.log(totalprice);
+    $("#priceCo").html("<div>" + totalprice + "dt</div>");
+  });
+});
+$("#musica").click(function () {
+  $(".container").empty();
+  for (var i = 0; i < music(tickets).length; i++) {
+    $(".container").append(prepare(music(tickets)[i]));
+  }
+  $(".buy").click(function () {
+    counter++;
+    var priceinstring = $(this).prev().text();
+    totalprice = totalprice + Number(priceinstring);
+    console.log(totalprice);
+    $("#priceCo").html("<div>" + totalprice + "dt</div>");
+  });
+});
+$("#ah1").click(function () {
+  $(".container").empty();
+  for (var i = 0; i < match(tickets).length; i++) {
+    $(".container").append(prepare(match(tickets)[i]));
+  }
+  $(".buy").click(function () {
+    counter++;
+    var priceinstring = $(this).prev().text();
+    totalprice = totalprice + Number(priceinstring);
+    console.log(totalprice);
+    $("#priceCo").html("<div>" + totalprice + "dt</div>");
+  });
+});
+$("#ah").click(function () {
+  $(".container").empty();
+  for (var i = 0; i < OneManShow(tickets).length; i++) {
+    $(".container").append(prepare(OneManShow(tickets)[i]));
+  }
+  $(".buy").click(function () {
+    counter++;
+    var priceinstring = $(this).prev().text();
+    totalprice = totalprice + Number(priceinstring);
+    console.log(totalprice);
+    $("#priceCo").html("<div>" + totalprice + "dt</div>");
+  });
+});
+
+///cart fanction
+
+var counter = 0;
+var totalprice = 0;

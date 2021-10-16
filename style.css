@@ -1,5 +1,5 @@
 body {
-  background-image: url(./2duo/téléchargement.png);
+  background-image: url("./backGround/téléchargement\ \(1\).png");
   background-size: cover;
   width: 1400px;
 }
@@ -12,6 +12,7 @@ body {
 }
 
 header {
+  display: -webkit-box;
   height: 90px;
   background: #2f3640;
   position: sticky;
@@ -97,9 +98,26 @@ header {
 }
 
 .container {
+  z-index: -100;
   width: 300px;
   height: 300px;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-gap: 1em;
+  text-align: center;
+  text-transform: inherit;
+  color: #000000;
+}
+.item {
+  border: 1px solid gray;
+  border-radius: 5px;
+  padding: 5px;
+  font-family: "Times New Roman", Times, serif;
+  font-size: 40px;
+  background-color: white;
+}
+
+.buy {
+  width: 3cm;
+  height: 2cm;
 }
